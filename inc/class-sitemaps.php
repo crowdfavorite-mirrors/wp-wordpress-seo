@@ -450,6 +450,10 @@ class WPSEO_Sitemaps {
 				$url['chf'] = 'weekly';
 				$url['loc'] = get_permalink( $p );
 
+			// CF // Add filter to be able to change informaiton interactively
+			$url = apply_filters( 'cf_yoast_seo_sitemaps_url', $url, $p );
+			// END CF //
+
 				$canonical = wpseo_get_value( 'canonical', $p->ID );
 				if ( $canonical && $canonical != '' && $canonical != $url['loc'] ) {
 					// Let's assume that if a canonical is set for this page and it's different from the URL of this post, that page is either
