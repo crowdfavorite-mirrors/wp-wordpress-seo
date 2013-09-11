@@ -191,7 +191,15 @@ class WPSEO_Sitemaps {
 			else if ( apply_filters( 'wpseo_sitemap_exclude_post_type', false, $post_type ) )
 				continue;
 
-			$query = $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = '%s' AND post_status IN ('publish','inherit')", $post_type );
+		// CF // Add where and join filters to match post counts for generating posts
+			$join_filter  = '';
+			$join_filter  = apply_filters( 'wpseo_typecount_join', $join_filter, $post_type );
+			$where_filter = '';
+			$where_filter = apply_filters( 'wpseo_typecount_where', $where_filter, $post_type );
+
+			//$query = $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = '%s' AND post_status IN ('publish','inherit')", $post_type );
+			$query = $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts {$join_filter} WHERE post_type = '%s' AND post_status IN ('publish','inherit') " . $where_filter, $post_type );
+		// END CF //
 
 			$count = $wpdb->get_var( $query );
 			// don't include post types with no posts
