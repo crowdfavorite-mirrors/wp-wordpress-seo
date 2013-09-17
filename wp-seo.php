@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WordPress SEO
-Version: 1.4.15CF
+Version: 1.4.15-0CF
 Plugin URI: http://yoast.com/wordpress/seo/#utm_source=wpadmin&utm_medium=plugin&utm_campaign=wpseoplugin
 Description: <strong>** MODIFIED BY CROWD FAVORITE TO ALLOW ADDITIONAL FILTERING. DO NOT UPDATE WITHOUT CHECKING CODE! **</strong> The first true all-in-one SEO solution for WordPress, including on-page content analysis, XML sitemaps and much more.
 Author: Joost de Valk
