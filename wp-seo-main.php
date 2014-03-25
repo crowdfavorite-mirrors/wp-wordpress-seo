@@ -14,7 +14,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * @internal Nobody should be able to overrule the real version number as this can cause serious issues
  * with the options, so no if ( ! defined() )
  */
-define( 'WPSEO_VERSION', '1.5.2' );
+define( 'WPSEO_VERSION', '1.5.2.5' );
 
 if ( ! defined( 'WPSEO_PATH' ) ) {
 	define( 'WPSEO_PATH', plugin_dir_path( WPSEO_FILE ) );
@@ -74,16 +74,12 @@ function wpseo_auto_load( $class ) {
 
 			'yoast_license_manager'              => WPSEO_PATH . 'admin/license-manager/class-license-manager.php',
 			'yoast_plugin_license_manager'       =>	WPSEO_PATH . 'admin/license-manager/class-plugin-license-manager.php',
-			'yoast_product'       							=>	WPSEO_PATH . 'admin/license-manager/class-product.php',
+			'yoast_product'                      =>	WPSEO_PATH . 'admin/license-manager/class-product.php',
 
 			'wp_list_table'                      => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
 			'walker_category'                    => ABSPATH . 'wp-includes/category-template.php',
 			'pclzip'                             => ABSPATH . 'wp-admin/includes/class-pclzip.php',
 		);
-
-		if ( defined( 'W3TC_DIR' ) ) {
-			$classes['w3_objectcache'] = W3TC_DIR . '/lib/W3/ObjectCache.php';
-		}
 	}
 
 	$cn = strtolower( $class );
@@ -194,7 +190,7 @@ function wpseo_frontend_init() {
 		add_filter( 'bbp_get_breadcrumb', '__return_false' );
 	}
 
-	add_action( 'get_header', 'wpseo_frontend_head_init' );
+	add_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
 }
 
 /**
@@ -259,7 +255,7 @@ function wpseo_admin_init() {
 		$GLOBALS['wpseo_admin_pages'] = new WPSEO_Admin_Pages;
 	}
 
-	if ( current_user_can( 'manage_options' ) && ( $options['tracking_popup_done'] === false || $options['ignore_tour'] === false ) ) {
+	if ( $options['tracking_popup_done'] === false || $options['ignore_tour'] === false ) {
 		add_action( 'admin_enqueue_scripts', array( 'WPSEO_Pointers', 'get_instance' ) );
 	}
 
